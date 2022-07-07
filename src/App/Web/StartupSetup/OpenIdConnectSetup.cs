@@ -1,7 +1,11 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
+using System.Net;
+using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.IdentityModel.Tokens;
 using OpenIddict.Abstractions;
 using Web.Helpers;
@@ -23,7 +27,9 @@ public static class OpenIdConnectSetup
             })
                 .AddCookie(options =>
                 {
-                    options.LoginPath = "/Identity/Account/Login";
+                    
+                    options.LoginPath = new PathString("/Identity/Account/Login");
+                    options.LogoutPath = "/Identity/Account/Logout";
                 })
 
             .AddJwtBearer(options =>

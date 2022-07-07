@@ -1,0 +1,50 @@
+﻿@page "{handler?}"
+@model LoginModel
+@{
+    ViewData["Title"] = "Login user";
+    Layout = "~/Pages/Shared/_LayoutSimple.cshtml";
+ 
+}
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <environment include="Development">
+        <script src="~/lib/moment/moment-min.js"></script>
+        <script src="~/lib/moment-timezone/moment-timezone-with-data-min.js"></script>
+    </environment>
+    <environment exclude="development">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"
+                asp-fallback-src="~/lib/moment/moment.min.js"
+                asp-fallback-test="window.moment"
+                integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" 
+                crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.26/moment-timezone-with-data.min.js"
+                asp-fallback-src="~/lib/moment-timezone/moment-timezone-with-data.min.js"
+                asp-fallback-test="window.moment && window.moment.tz"
+                integrity="sha256-6EFCRhQs5e10gzbTAKzcFFWcpDGNAzJjkQR3i1lvqYE="
+                crossorigin="anonymous">
+        </script>
+    </environment>
+    <script type="text/javascript" src="~/js/auth/login.js"></script>
+}
+@using (Html.BeginForm()){
+    @if (Model?.ModelState?.ErrorCount > 0)
+    {
+        <div asp-validation-summary="All" class="c-red"></div>
+    }
+
+    @Html.Hidden("Input.TimeZone")
+
+    <label asp-for="Email"></label>
+    <input asp-for="Email" class="full-width" placeholder="Enter Email Address" />
+    <span asp-validation-for="Email" class="c-red"></span>
+
+    <label asp-for="Password"></label>
+    <input type="password" asp-for="Password" class="full-width" />
+    <span asp-validation-for="Password" class="c-red"></span>
+
+    <div class="d-flex justify-content-between">
+        <input type = "submit" class="button" value="Login"/>
+
+    </div>
+}
+

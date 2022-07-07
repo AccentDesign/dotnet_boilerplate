@@ -1,4 +1,5 @@
-﻿using Core.Comparers;
+﻿using System.Reflection;
+using Core.Comparers;
 using Core.Jobs.Interfaces;
 
 namespace Core.Jobs;
@@ -15,7 +16,8 @@ public static class DoJobs
             .CreateWithoutHashCode((candidate, parameter) => parameter.IsAssignableFrom(candidate));
     public static void DoAll(params object[] candidates)
     {
-        var assemblies = AppDomain.CurrentDomain.GetAssemblies().Where(assembly =>assembly.DefinedTypes.Any(define => define.GetInterfaces().Contains(typeof(IJob))));
+        var jobExpectedAssemblies = new List<string> { "Application", "Web", "Core" };
+        var assemblies = AppDomain.CurrentDomain.GetAssemblies().Where(assembly => jobExpectedAssemblies.Any(name => assembly.FullName.StartsWith(name)));
         foreach (var assembly in assemblies) {
             var jobs = assembly.GetTypes().Where(t => t.GetInterfaces().Contains(typeof(IJob)));
 

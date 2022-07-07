@@ -2,6 +2,7 @@
 using Identity.Model;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -98,8 +99,8 @@ namespace Identity.Api.Controllers
             return Forbid(properties, OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
         }
 
-       
-        [HttpPost("~/logout") ]
+
+        [HttpPost("~/logout")]
         [HttpGet("~/logout")]
         [Authorize]
         public async Task<IActionResult> LogoutPost()
@@ -111,11 +112,10 @@ namespace Identity.Api.Controllers
             // after a successful authentication flow (e.g Google or Facebook).
             await _signInManager.SignOutAsync();
             await foreach (var token in _tokenManager.FindBySubjectAsync(User.Claims
-                               .FirstOrDefault(claim => claim.Type == "sub").Value))
-            {
+                               .FirstOrDefault(claim => claim.Type == "sub").Value)) {
                 await _tokenManager.TryRevokeAsync(token);
             }
-        
+
             // Returning a SignOutResult will ask OpenIddict to redirect the user agent
             // to the post_logout_redirect_uri specified by the client application or to
             // the RedirectUri specified in the authentication properties if none was set.

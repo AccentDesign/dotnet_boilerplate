@@ -1,12 +1,26 @@
-﻿@using System.Security.Claims
+﻿@using Web.Extensions
 
 
 <div class="header no-print">
     @{
         string dynamicReturnUrl = Context.Request.Path + "?" + Context.Request.QueryString;
     }
-    <div>
-        <span>List of events </span>
-    </div>
+    <dib>
+        <span>Accent .net6 boilerplate</span>
 
+    </dib>
+    <div>
+        <button class="button button-secondary menu-toggle">@User.Identity.Name @User.GetUserFamily()<i class="icon-down-dir"></i></button>
+
+    </div>
+    <div class="menu">
+        <ul>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <li>
+                    <a class="form-inline margin-zero" asp-area="Identity" asp-page-handler="SignOut" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Link("/",null)">Logout</a>
+                </li>
+            }
+        </ul>
+    </div>
 </div>

@@ -1,9 +1,11 @@
+using System.Net;
 using App.Share.Providers;
 using Application.StartupSetup;
 using Mapping.StartupSetup;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Routing;
+using Web.Helpers;
 using Web.StartupSetup;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -31,8 +33,8 @@ builder.Services.AddOpenIdConnect(builder.Configuration, builder.Environment)
     .AddSingleton<IDateTimeProvider, DateTimeProvider>()
     .AddRazorPages(options =>
     {
-        options.Conventions.AddAreaPageRoute("Admin", "/Event/Index", "/admin");
-        options.Conventions.AddAreaPageRoute("Admin", "/Event/Index", "");
+        options.Conventions.AddAreaPageRoute("Admin", "/Index", "/admin");
+        options.Conventions.AddAreaPageRoute("Admin", "/Index", "");
     });
 
 var app = builder.Build();
@@ -54,6 +56,25 @@ app.UseSession();
 
 
 app.UseApplication(app.Services);
+
+app.Use(async (context, next) =>
+{
+    var cookie = AuthencticationHelper.GetToken(context);
+    if (!string.IsNullOrEmpty(cookie)) {
+        context.Request.Headers.Add("Authorization", "Bearer " + cookie);
+    }
+    await next();
+});
+
+app.UseStatusCodePages(async context =>
+{
+    var response = context.HttpContext.Response;
+
+    if (response.StatusCode == (int)HttpStatusCode.Unauthorized) {
+        response.Redirect(
+            $"/Identity/Account/Login{(context.HttpContext.Request.Path.Value.ToLower().Contains("login") ? string.Empty : "?returnUrl=" + context.HttpContext.Request.Path)}");
+    }
+});
 
 app.UseAuthorization();
 
