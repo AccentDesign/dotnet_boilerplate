@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using OpenIddict.Abstractions;
+using Service.Share.StartupSetup.Authentication;
 
 namespace Identity.Api.StartupSetup;
 
@@ -75,41 +76,17 @@ public static class OpenIddictSetup
                 options.UseAspNetCore();
 
             });
-        services.Configure<IdentityOptions>(options =>
-        {
-            options.ClaimsIdentity.UserNameClaimType = OpenIddictConstants.Claims.Username;
-            options.ClaimsIdentity.UserIdClaimType = OpenIddictConstants.Claims.Subject;
-            options.ClaimsIdentity.RoleClaimType = OpenIddictConstants.Claims.Role;
-            options.ClaimsIdentity.EmailClaimType = OpenIddictConstants.Claims.Email;
-            options.ClaimsIdentity.SecurityStampClaimType = "secret_value";
-        });
+        
         // Just need for authorize users in [authorized] controller like Logout
+      
         services
+            .ConfigureIdentityOptions()
             .AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
-            .AddJwtBearer(options =>
-            {
-
-                var isDevelopmentOrStaging = env.IsDevelopment() || env.IsStaging();
-
-                options.SaveToken = true;
-                options.RequireHttpsMetadata = !isDevelopmentOrStaging;
-
-                options.Authority = (env.IsProduction() ? "https://" : "http://") + configuration.GetSection("OpenIDConnectSettings:Authority").Value ;
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = !isDevelopmentOrStaging,
-                    ValidateIssuerSigningKey = true,
-                    ValidateAudience = false,
-                    RoleClaimType = OpenIddictConstants.Claims.Role,
-                    NameClaimType = OpenIddictConstants.Claims.Name,
-                    ValidateLifetime = true,
-                    ClockSkew = TokenValidationParameters.DefaultClockSkew,
-                };
-            });
+            .AddJwtBearer(options=> JwtBearerSetup.DefaultOptions(options,env, (env.IsProduction() ? "https://" : "http://") + configuration.GetSection("OpenIDConnectSettings:Authority").Value));
 
         return services;
     }

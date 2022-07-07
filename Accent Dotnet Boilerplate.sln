@@ -44,6 +44,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Identity", "src\Authenticat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenIdConnectServer.Api", "src\Authentication\OpenIdConnectServer.Api\OpenIdConnectServer.Api.csproj", "{2012C331-445D-4018-912C-7AB8E7878BEC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service.Share", "src\Service.Share\Service.Share.csproj", "{538AC8B5-76C4-40E1-BA65-0ED4AC0E2DA9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -106,6 +108,10 @@ Global
 		{2012C331-445D-4018-912C-7AB8E7878BEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2012C331-445D-4018-912C-7AB8E7878BEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2012C331-445D-4018-912C-7AB8E7878BEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{538AC8B5-76C4-40E1-BA65-0ED4AC0E2DA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{538AC8B5-76C4-40E1-BA65-0ED4AC0E2DA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{538AC8B5-76C4-40E1-BA65-0ED4AC0E2DA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{538AC8B5-76C4-40E1-BA65-0ED4AC0E2DA9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -126,6 +132,7 @@ Global
 		{17A1A54B-F259-4B05-B130-302A4E276568} = {683FC08C-1CFA-4896-B7AF-9D3848D6A0D0}
 		{E1084242-574C-413A-997F-25D9118CAC44} = {17A1A54B-F259-4B05-B130-302A4E276568}
 		{2012C331-445D-4018-912C-7AB8E7878BEC} = {17A1A54B-F259-4B05-B130-302A4E276568}
+		{538AC8B5-76C4-40E1-BA65-0ED4AC0E2DA9} = {683FC08C-1CFA-4896-B7AF-9D3848D6A0D0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8A3A9A5D-A1C5-42A1-9E6F-CE23E5B4C423}

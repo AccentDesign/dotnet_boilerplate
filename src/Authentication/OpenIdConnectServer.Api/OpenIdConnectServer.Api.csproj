@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Service.Share\Service.Share.csproj" />
     <ProjectReference Include="..\Identity\Identity.csproj" />
   </ItemGroup>
 
