@@ -52,8 +52,8 @@ public class IdentitySeeder : IDatabaseSeeder
         }
 
         var adminUsers = new List<(User user, string password)>() {
-            (new User() { Email = "geoff@accentdesign.co.uk", UserName = "geoff@accentdesign.co.uk", Name = "Geoff", FamilyName = "Somner" },
-                "Geoff123$%^"),
+            (new User() { Email = "admin@example.com", UserName = "admin@example.com", Name = "Joe", FamilyName = "Family" },
+                "admin123$%^"),
         };
  
         foreach (var userPassword in adminUsers) {
