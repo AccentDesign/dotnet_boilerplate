@@ -105,7 +105,7 @@ _Below is how you can run your project via docker compose._
    ```
 3. [Head to https://localhost:9001](https://localhost:9001)
 
-4. Use Email: geoff@accentdesign.co.uk and Password: Geoff123$%^ to login
+4. Use Email: admin@example.com and Password: admin123$%^ to login
 
 5. [Refer to http://localhost:9002/swagger/](http://localhost:9002/swagger/) to see available APIs
 
